@@ -8,12 +8,6 @@ This Terraform module creates an **AWS EC2 Launch Template** with flexible optio
 
 This module provisions a highly customizable and reusable AWS EC2 Launch Template that serves as the base configuration for launching EC2 instances. 
 
-### Intended Users
-
-- DevOps and infrastructure engineers who want to manage EC2 instance configurations via Infrastructure as Code (IaC).
-- Platform teams looking to standardize EC2 deployments with reusable templates.
-- Users provisioning Auto Scaling Groups, EKS node groups, or ECS capacity providers.
-
 ---
 
 ## Resources Created and Managed by This Module
@@ -92,26 +86,6 @@ No modules.
 module "launch_template" {
   source = "git::https://github.com/tothenew/terraform-aws-launch-template.git"
 
-  name_prefix       = "webserver"
-  ami_id            = "ami-0abcdef1234567890"
-  instance_type     = "t3.micro"
-  key_name          = "my-key"
-  user_data         = filebase64("user-data.sh")
-  vpc_security_group_ids = ["sg-12345678"]
-  
-  block_device_mappings = {
-    "root" = {
-      device_name = "/dev/xvda"
-      ebs = [{
-        volume_size = 20
-        volume_type = "gp3"
-        delete_on_termination = true
-      }]
-    }
-  }
+  user_data         = filebase64("user-data.sh")  
 
-  tags = {
-    Environment = "dev"
-    Project     = "launch-template"
-  }
 }
